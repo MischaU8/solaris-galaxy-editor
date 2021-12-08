@@ -1,0 +1,50 @@
+[
+		{
+				"id": 1,
+				"name": "Orbital Array"
+		},
+		{
+				"id": 2,
+				"name": "Space Dock"
+		},
+		{
+				"id": 3,
+				"name": "Atmosphere Processor"
+		},
+		{
+				"id": 4,
+				"name": "Orbital Cannon"
+		},
+		{
+				"id": 5,
+				"name": "Warp Scrambler"
+		},
+		{
+				"id": 6,
+				"name": "World Builder"
+		},
+		{
+				"id": 7,
+				"name": "War Machine"
+		},
+		{
+				"id": 8,
+				"name": "Scrambler"
+		},
+		{
+				"id": 9,
+				"name": "Demolition Controller"
+		},
+		{
+				"id": 10,
+				"name": "Trade Port"
+		},
+		{
+				"id": 11,
+				"name": "Research Station"
+		},
+		{
+				"id": 12,
+				"name": "Financial Analyst"
+		}
+]
