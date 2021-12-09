@@ -1,4 +1,6 @@
-### About this is the source for solaris-galaxy-editor, to use the editor go to it's [github page](https://kurtzmusch.github.io/solaris-galaxy-editor/)
+### About
+
+this is the source for solaris-galaxy-editor, to use the editor go to it's [github page](https://kurtzmusch.github.io/solaris-galaxy-editor/)
 solaris-galaxy-editor allows you to manually create galaxyes and generate a JSON string that can be used to create a new game on [solaris](https://solaris.games)
 
 ### Contributing
