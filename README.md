@@ -1,28 +1,29 @@
-this is the source for solaris-galaxy-editor, to use the editor go to it's [github page](https://kurtzmusch.github.io/solaris-galaxy-editor/)
+### About this is the source for solaris-galaxy-editor, to use the editor go to it's [github page](https://kurtzmusch.github.io/solaris-galaxy-editor/)
+solaris-galaxy-editor allows you to manually create galaxyes and generate a JSON string that can be used to create a new game on [solaris](https://solaris.games)
 
-##Contributing
+### Contributing
 
 assuming you have `node.js` and `vue-cli`
 
-## Install dependencies
+#### Install dependencies
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+#### Compiles and hot-reloads for development
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+#### Compiles and minifies for production
 ```
 npm run build
 ```
 
-### Lints and fixes files
+#### Lints and fixes files
 ```
 npm run lint
 ```
 
-### Customize configuration
+#### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
