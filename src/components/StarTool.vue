@@ -1,8 +1,8 @@
   <template>
       <div id="star-attributes" v-if="galaxyEditor.selectedStar" >
         <div class='col-auto bg-dark'>
-          <div class='row'>
-            <label class='col-6 col-form-label-sm'>Economy</label>
+        <div class='row'>
+          <label class='col-6 col-form-label-sm'>Economy</label>
           <input class='col mr-3 form-control-sm' type='number' v-model.number='galaxyEditor.selectedStar.infrastructure.economy'/>
         </div>
         <div class='row'>
@@ -15,7 +15,18 @@
         </div>
         <div class='row'>
           <label class='col-6 col-form-label-sm'>Natural Resources</label>
-          <input class='col mr-3 form-control-sm' type='number' v-model.number='galaxyEditor.selectedStar.naturalResources'/>
+        </div>
+        <div class='row'>
+          <label class='col-6 col-form-label-sm'>Economy</label>
+          <input class='col mr-3 form-control-sm' type='number' v-model.number='galaxyEditor.selectedStar.naturalResources.economy'/>
+        </div>
+        <div class='row'>
+          <label class='col-6 col-form-label-sm'>Industry</label>
+          <input class='col mr-3 col form-control-sm' type='number' v-model.number='galaxyEditor.selectedStar.naturalResources.industry'/>
+        </div>
+        <div class='row'>
+          <label class='col-6 col-form-label-sm'>Science</label>
+          <input class='col mr-3 form-control-sm' type='number' v-model.number='galaxyEditor.selectedStar.naturalResources.science'/>
         </div>
         <div class='row form-check form-check-inline'>
           <div class='col-6'>
@@ -30,13 +41,13 @@
         <div class='row'>
           <select class='col mx-3' v-model.number='galaxyEditor.selectedStar.playerIndex'>
             <option value='-1'>None</option>
-            <option v-for='(playerShapeAndColour,index) in playerShapeAndColours' v-bind:value='index'>{{ playerShapeAndColour }}</option>
+            <option v-for='(playerShapeAndColour,index) in playerShapeAndColours' v-bind:value='index' :key='index'>{{ playerShapeAndColour }}</option>
           </select>
         </div>
         <div class='row'>
           <select v-model.number='galaxyEditor.selectedStar.specialistId' class='col mx-3'>
             <option value='-1'>None</option>
-            <option v-for='specialist in specialists' v-bind:value='specialist.id'>{{specialist.name}}</option>
+            <option v-for='(specialist,index) in specialists' v-bind:value='specialist.id' :key='index'>{{specialist.name}}</option>
           </select>
         </div>
         <div class='row'>
@@ -48,9 +59,12 @@
 </template>
 
 <script>
+  import GalaxyEditor from '../editor'
   export default {
-    props: {
-      galaxyEditor: Object
+    data() {
+      return {
+        galaxyEditor: GalaxyEditor
+      }
     },
     methods: {
       updateStar() {

@@ -210,6 +210,7 @@ class GalaxyEditor {
   }
 
   onStarMouseOut(star) {
+		if(star) {console.log()}
     this.hoveredStar = null
   }
 
@@ -254,4 +255,6 @@ class GalaxyEditor {
   }
 }
 
-export default new GalaxyEditor()
+let editor = new GalaxyEditor()
+
+export default editor

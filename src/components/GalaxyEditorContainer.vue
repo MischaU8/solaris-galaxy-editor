@@ -1,7 +1,7 @@
 <template>
   <div id="galaxyEditorContainer" class='container'>
     <brush-tool :toolOptions='galaxyEditor.brushOptions'/>
-    <star-tool v-if='galaxyEditor.selectedStar' :galaxyEditor='galaxyEditor'/>
+    <star-tool v-if='galaxyEditor.selectedStar' />
     <div id="pixi-app" ref='pixiApp'/>
     <json-tool :galaxyEditor='galaxyEditor'/>
   </div>
