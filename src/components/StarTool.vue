@@ -2,6 +2,9 @@
       <div id="star-attributes" v-if="galaxyEditor.selectedStar" >
         <div class='col-auto bg-dark'>
         <div class='row'>
+          <label class='col-6 col-form-label-sm'>Infrastructure</label>
+        </div>
+        <div class='row'>
           <label class='col-6 col-form-label-sm'>Economy</label>
           <input class='col mr-3 form-control-sm' type='number' v-model.number='galaxyEditor.selectedStar.infrastructure.economy'/>
         </div>
@@ -36,6 +39,16 @@
           <div class='col-6'>
             <label>Home Star </label>
             <input class='form-check-input' type='checkbox' v-model.number='galaxyEditor.selectedStar.homeStar'/>
+          </div>
+        </div>
+        <div class='row form-check form-check-inline'>
+          <div class='col-6'>
+            <label>Asteroid Field</label>
+            <input class='form-check-input' type='checkbox' v-model.number='galaxyEditor.selectedStar.isAsteroidField'/>
+          </div>
+          <div class='col-6'>
+            <label>Nebula</label>
+            <input class='form-check-input' type='checkbox' v-model.number='galaxyEditor.selectedStar.isNebula'/>
           </div>
         </div>
         <div class='row'>

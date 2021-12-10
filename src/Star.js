@@ -17,6 +17,8 @@ class Star extends EventEmitter {
     this.homeStar = false
     this.playerIndex = -1
     this.specialistId = -1
+    this.isNebula = false
+    this.isAsteroidField = false
 
     let nr = Math.round(Math.random()*50)
     this.naturalResources = {
@@ -33,6 +35,8 @@ class Star extends EventEmitter {
       this.playerIndex = fullStar.playerIndex
       this.specialistId = fullStar.specialistId
       this.naturalResources = fullStar.naturalResources
+      this.isNebula = fullStar.isNebula
+      this.isAsteroidField = fullStar.isAsteroidField
     }
 
     this.app = app
@@ -76,6 +80,8 @@ class Star extends EventEmitter {
     this._updateInfrastructureText()
     this._updateNaturalResourcesText()
     this._updateSpecialistSprite()
+    this._updateNebulaSprite()
+    this._updateAsteroidFieldSprite()
   }
 
   _updatePlayerGeometry() {
@@ -150,6 +156,36 @@ class Star extends EventEmitter {
     this.container.addChild(this.specialist_sprite)
   }
 
+  _updateNebulaSprite() {
+    if( this.nebulaSprite ) {
+      this.container.removeChild(this.nebulaSprite)
+      this.nebulaSprite.destroy()
+      this.nebulaSprite = null
+    }
+    if( this.isNebula ) {
+      let nebulaTexture = TextureService.STAR_MODIFIERS['nebula']
+      this.nebulaSprite = new PIXI.Sprite(nebulaTexture)
+      this.nebulaSprite.anchor.set(0.5)
+      this.nebulaSprite.width = 32
+      this.nebulaSprite.height = 32
+      this.container.addChild(this.nebulaSprite)
+    }
+  }
+
+  _updateAsteroidFieldSprite() {
+    if( this.asteroidFieldSprite ) {
+      this.container.removeChild(this.asteroidFieldSprite)
+      this.asteroidFieldSprite.destroy()
+      this.asteroidFieldSprite = null
+    }
+    if( this.isAsteroidField ) {
+      let asteroidFieldTexture = TextureService.STAR_MODIFIERS['asteroids']
+      this.asteroidFieldSprite = new PIXI.Sprite(asteroidFieldTexture)
+      this.asteroidFieldSprite.anchor.set(0.5)
+      this.container.addChild(this.asteroidFieldSprite)
+    }
+  }
+
   _updateWarpGateGeometry() {
     //TODO use graphics.clear
     if( this.warpGate_geometry ) {
@@ -180,7 +216,7 @@ class Star extends EventEmitter {
     if( this.naturalResources_text ) {
       this.container.removeChild(this.naturalResources_text)
     }
-    this.naturalResources_text = new PIXI.Text(`${this.naturalResources}`, {fontFamily: 'Arial', fontSize: 24, fill: 0xffffff, align: 'center'})
+    this.naturalResources_text = new PIXI.Text(`${this.naturalResources.economy} ${this.naturalResources.industry} ${this.naturalResources.science}`, {fontFamily: 'Arial', fontSize: 24, fill: 0xffffff, align: 'center'})
     this.naturalResources_text.position.x = -(this.naturalResources_text.width/2.0)
     this.naturalResources_text.position.y = 16
     this.container.addChild(this.naturalResources_text)

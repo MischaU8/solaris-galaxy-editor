@@ -9,9 +9,11 @@ class TextureService {
     SPECIALIST_TEXTURES = {}
 
     STAR_SYMBOLS = {}
+    STAR_MODIFIERS = {}
 
     initialize () { //TODO since both game and editor uses this. it should bot be initialized by both
       this._loadStarSymbols()
+      this._loadStarModifiers()
       this.DEFAULT_FONT_STYLE = new PIXI.TextStyle({
         fontFamily: `'Space Mono', monospace`,
         fill: 0xFFFFFF,
@@ -81,6 +83,10 @@ class TextureService {
       this._loadSpecialistTexture('rocket')
     }
 
+    _loadStarModifiers() {
+      this.STAR_MODIFIERS['nebula'] = new PIXI.Texture(PIXI.BaseTexture.from(require('./assets/star-nebula-0.png')))
+      this.STAR_MODIFIERS['asteroids'] = new PIXI.Texture(PIXI.BaseTexture.from(require('./assets/star-asteroid-field-0.png')))
+    }
     _loadStarSymbols() {
       this.STAR_SYMBOLS['scannable'] = new PIXI.Texture(PIXI.BaseTexture.from(require('./assets/128x128_star_scannable.svg')))
     }
