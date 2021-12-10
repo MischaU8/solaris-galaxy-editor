@@ -185,16 +185,15 @@ class GalaxyEditor {
     let rawStars = rawStructure.stars
     try {
       for(let star of rawStars) {
+        console.log(star)
         if( typeof star.location.x !== 'number' ) return
         if( typeof star.location.y !== 'number' ) return
 
         if( typeof star.homeStar !== 'boolean' ) return
         if( typeof star.warpGate !== 'boolean' ) return
 
-        if( typeof star.specialistId !== 'number' ) return
-        if( typeof star.playerIndex !== 'number' ) return
 
-        if( typeof star.naturalResources !== 'number' ) return
+        //if( typeof star.naturalResources !== 'number' ) return
       }
       for(let star of rawStars) {
         this.addStar(star.location, star)

@@ -52,7 +52,7 @@
           </div>
         </div>
         <div class='row'>
-          <select class='col mx-3' v-model.number='galaxyEditor.selectedStar.playerIndex'>
+          <select class='col mx-3' v-model.number='galaxyEditor.selectedStar.playerId'>
             <option value='-1'>None</option>
             <option v-for='(playerShapeAndColour,index) in playerShapeAndColours' v-bind:value='index' :key='index'>{{ playerShapeAndColour }}</option>
           </select>

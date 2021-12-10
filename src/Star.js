@@ -4,8 +4,13 @@ import TextureService from './texture'
 
 class Star extends EventEmitter {
 
+  static currentId = 0
+
   constructor (app, location, fullStar, coloursValues, shapes) {
     super()
+
+    this.id = Star.currentId
+    Star.currentId += 1
 
     this.location = location
     this.infrastructure = {
@@ -15,8 +20,8 @@ class Star extends EventEmitter {
     }
     this.warpGate = false
     this.homeStar = false
-    this.playerIndex = -1
-    this.specialistId = -1
+    this.playerId = null
+    this.specialistId = null
     this.isNebula = false
     this.isAsteroidField = false
 
@@ -28,13 +33,16 @@ class Star extends EventEmitter {
     }
 
     if(fullStar) {
+      this.id = fullStar.id
+      Star.currentId = fullStar.id+1
       this.location = fullStar.location
-      this.infrastructure = fullStar.infrastructure
       this.warpGate = fullStar.warpGate
       this.homeStar = fullStar.homeStar
-      this.playerIndex = fullStar.playerIndex
+      this.playerId = fullStar.playerId
       this.specialistId = fullStar.specialistId
-      this.naturalResources = fullStar.naturalResources
+      if( fullStar.infrastructure ) {
+        this.infrastructure = fullStar.infrastructure
+      }
       this.isNebula = fullStar.isNebula
       this.isAsteroidField = fullStar.isAsteroidField
     }
@@ -60,9 +68,10 @@ class Star extends EventEmitter {
   }
 
   _updatePlayer(colours, shapes) {
-    if(this.playerIndex === -1) { return }
-    this.player.colour = colours[this.playerIndex%8]
-    this.player.shape = shapes[Math.floor(this.playerIndex/8)]
+    if(!this.playerId) {return}
+    if(this.playerId === -1) { return }
+    this.player.colour = colours[this.playerId%8]
+    this.player.shape = shapes[Math.floor(this.playerId/8)]
   }
 
   _updateGraphics() {
@@ -166,8 +175,8 @@ class Star extends EventEmitter {
       let nebulaTexture = TextureService.STAR_MODIFIERS['nebula']
       this.nebulaSprite = new PIXI.Sprite(nebulaTexture)
       this.nebulaSprite.anchor.set(0.5)
-      this.nebulaSprite.width = 32
-      this.nebulaSprite.height = 32
+      this.nebulaSprite.width = 64
+      this.nebulaSprite.height = 64
       this.container.addChild(this.nebulaSprite)
     }
   }
@@ -200,7 +209,7 @@ class Star extends EventEmitter {
   }
 
   _updateStarSprite() {
-    if( this.specialistId !== -1 ) { return }
+    if( this.specialistId ) { return }
     if( this.star_sprite ) {
       this.container.removeChild(this.star_sprite)
     }
@@ -263,13 +272,16 @@ class Star extends EventEmitter {
 
   toJSON() {
     return( {
+      id: this.id,
       location: this.location,
       naturalResources: this.naturalResources,
       //infrastructure: this.infrastructure,
       warpGate: this.warpGate,
       homeStar: this.homeStar,
-      playerIndex: this.playerIndex,
-      specialistId: this.specialistId
+      isNebula: this.isNebula,
+      isAsteroidField: this.isAsteroidField,
+      playerId: (this.playerId >= 0 ? this.playerId : null) ,
+      specialistId: this.specialistId >= 0 ? this.specialistId : null
     })
   }
 
