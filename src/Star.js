@@ -18,7 +18,12 @@ class Star extends EventEmitter {
     this.playerIndex = -1
     this.specialistId = -1
 
-    this.naturalResources = Math.round(Math.random()*50)
+    let nr = Math.round(Math.random()*50)
+    this.naturalResources = {
+      economy: nr,
+      industry: nr,
+      science: nr,
+    }
 
     if(fullStar) {
       this.location = fullStar.location
@@ -224,7 +229,7 @@ class Star extends EventEmitter {
     return( {
       location: this.location,
       naturalResources: this.naturalResources,
-      infrastructure: this.infrastructure,
+      //infrastructure: this.infrastructure,
       warpGate: this.warpGate,
       homeStar: this.homeStar,
       playerIndex: this.playerIndex,
