@@ -65,7 +65,7 @@ class Star extends EventEmitter {
       this.container.scale.x = 1.0*this.baseScale
       this.container.scale.y = 1.0*this.baseScale
     }
-    this._updateStarGeometry()
+    this._updateStarSprite()
     this._updateWarpGateGeometry()
     this._updatePlayerGeometry()
     this._updateInfrastructureText()
@@ -158,16 +158,16 @@ class Star extends EventEmitter {
     }
   }
 
-  _updateStarGeometry() {
-    if( this.star_geometry ) {
-      this.container.removeChild(this.star_geometry)
-    }
+  _updateStarSprite() {
     if( this.specialistId !== -1 ) { return }
-
-    this.star_geometry = new PIXI.Graphics()
-    this.star_geometry.lineStyle(2, 0xffffff, 1.0)
-    this.star_geometry.drawCircle(0, 0, 8)
-    this.container.addChild(this.star_geometry)
+    if( this.star_sprite ) {
+      this.container.removeChild(this.star_sprite)
+    }
+    this.star_sprite = new PIXI.Sprite(TextureService.STAR_SYMBOLS['scannable'])
+    this.star_sprite.anchor.set(0.5)
+    this.star_sprite.width = 12.0
+    this.star_sprite.height = 12.0
+    this.container.addChild(this.star_sprite)
   }
 
   _updateNaturalResourcesText() {
