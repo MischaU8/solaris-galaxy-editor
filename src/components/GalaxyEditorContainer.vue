@@ -1,6 +1,7 @@
 <template>
   <div id="galaxyEditorContainer" class='container'>
     <brush-tool :toolOptions='galaxyEditor.brushOptions'/>
+    <snapper-tool/>
     <star-tool v-if='galaxyEditor.selectedStar' />
     <div id="pixi-app" ref='pixiApp'/>
     <json-tool :galaxyEditor='galaxyEditor'/>
@@ -11,6 +12,7 @@
 
 import GalaxyEditor from '../editor'
 
+import SnapperToolVue from './SnapperTool.vue'
 import StarToolVue from './StarTool.vue'
 import BrushToolVue from './BrushTool.vue'
 import JSONToolVue from './JSONTool.vue'
@@ -19,7 +21,8 @@ export default {
   components: {
     'star-tool': StarToolVue,
     'json-tool': JSONToolVue,
-    'brush-tool': BrushToolVue
+    'brush-tool': BrushToolVue,
+    'snapper-tool': SnapperToolVue
   },
   data () {
     return {

@@ -2,14 +2,17 @@ import * as PIXI from 'pixi.js-legacy'
 import { Viewport } from 'pixi-viewport'
 import Star from './Star'
 import TextureService from './texture'
+import EventEmitter from 'events'
 
-class GalaxyEditor {
+class GalaxyEditor extends EventEmitter {
 
   static COLOURS = require('./colours.json') //TODO pull this from the api
   static SPECIALISTS = require('./specialists.json')
   static LIGHT_YEAR_LENGTH = 50
 
   constructor() {
+    super()
+    this.cursor = { x: 0, y: 0 }
     this.stars = new Array()
     this.selectedStar = null
     //this.vueContainer = null
@@ -127,12 +130,14 @@ class GalaxyEditor {
   }
 
   _onViewportClicked(clickEvent) {
+    if(clickEvent) { clickEvent = null }
     if( this.hoveredStar ) {
       this.selectedStar = this.hoveredStar
     }
     else {
       this.selectedStar = null
-      this.addStars(clickEvent.world)
+      this.addStars(this.cursor)
+      this.emit( 'onNothingClicked', this.cursor )
     }
   }
 
