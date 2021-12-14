@@ -190,7 +190,6 @@ class GalaxyEditor extends EventEmitter {
     let rawStars = rawStructure.stars
     try {
       for(let star of rawStars) {
-        console.log(star)
         if( typeof star.location.x !== 'number' ) return
         if( typeof star.location.y !== 'number' ) return
 

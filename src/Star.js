@@ -40,6 +40,7 @@ class Star extends EventEmitter {
       this.homeStar = fullStar.homeStar
       this.playerId = fullStar.playerId
       this.specialistId = fullStar.specialistId
+      this.naturalResources = fullStar.naturalResources
       if( fullStar.infrastructure ) {
         this.infrastructure = fullStar.infrastructure
       }
