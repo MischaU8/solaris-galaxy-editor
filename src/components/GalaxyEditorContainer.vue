@@ -1,6 +1,6 @@
 <template>
   <div id="galaxyEditorContainer" class='container'>
-    <brush-tool :toolOptions='galaxyEditor.brushOptions'/>
+    <brush-tool/>
     <snapper-tool/>
     <star-tool v-if='galaxyEditor.selectedStar' />
     <div id="pixi-app" ref='pixiApp'/>
