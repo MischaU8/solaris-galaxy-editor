@@ -2,6 +2,7 @@
   <div id="galaxyEditorContainer" class='container'>
     <brush-tool/>
     <snapper-tool/>
+    <randomizer-tool/>
     <star-tool v-if='galaxyEditor.selectedStar' />
     <div id="pixi-app" ref='pixiApp'/>
     <json-tool :galaxyEditor='galaxyEditor'/>
@@ -16,13 +17,15 @@ import SnapperToolVue from './SnapperTool.vue'
 import StarToolVue from './StarTool.vue'
 import BrushToolVue from './BrushTool.vue'
 import JSONToolVue from './JSONTool.vue'
+import RandomizerToolVue from './RandomizerTool.vue'
 
 export default {
   components: {
     'star-tool': StarToolVue,
     'json-tool': JSONToolVue,
     'brush-tool': BrushToolVue,
-    'snapper-tool': SnapperToolVue
+    'snapper-tool': SnapperToolVue,
+    'randomizer-tool': RandomizerToolVue
   },
   data () {
     return {

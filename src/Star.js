@@ -68,6 +68,11 @@ class Star extends EventEmitter {
     this._updateGraphics()
   }
 
+  updatePosition() {
+    this.container.position.x = this.location.x
+    this.container.position.y = this.location.y
+  }
+
   _updatePlayer(colours, shapes) {
     if(!this.playerId) {return}
     if(this.playerId === -1) { return }
