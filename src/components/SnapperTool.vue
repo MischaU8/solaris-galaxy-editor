@@ -37,6 +37,9 @@
       onNothingClicked(position) {
         this.lastClickPosition = position
       },
+      onStarSelected() {
+        this.lastClickPosition = this.galaxyEditor.selectedStar.location
+      },
       onKeyDown(e) {
         let key = e.key
         if( ( key === 'Shift' )  || ( key === 'Control' ) ) {
@@ -77,6 +80,7 @@
     },
     mounted () {
       this.galaxyEditor.on('onNothingClicked', this.onNothingClicked.bind(this))
+      this.galaxyEditor.on('onStarSelected', this.onStarSelected.bind(this))
       this.pixiApp = this.galaxyEditor.app
       this.snapToSprite = new PIXI.Sprite(TextureService.STAR_SYMBOLS['scannable'])
       this.snapToSprite.width = 6.0
