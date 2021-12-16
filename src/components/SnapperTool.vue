@@ -91,4 +91,7 @@
 </script>
 
 <style>
+  #snapper-tool {
+    position: absolute;
+  }
 </style>

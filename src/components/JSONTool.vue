@@ -33,4 +33,7 @@ export default {
 </script>
 
 <style>
+  #JSON-tools {
+    position: absolute;
+  }
 </style>

@@ -1,11 +1,12 @@
 <template>
-  <div id="galaxyEditorContainer" class='container'>
-    <brush-tool/>
-    <snapper-tool/>
-    <randomizer-tool/>
-    <star-tool v-if='galaxyEditor.selectedStar' />
+  <div id="galaxyEditorContainer" >
+    <tool-menu :galaxyEditor='galaxyEditor' v-on:change-menu='onMenuChanged'/>
+    <brush-tool v-show='currentMenu==="brush"'/>
+    <snapper-tool v-show='currentMenu==="snapper"'/>
+    <randomizer-tool v-show='currentMenu==="randomizer"'/>
+    <star-tool v-show='(galaxyEditor.selectedStar) && (currentMenu==="star")' />
+    <json-tool :galaxyEditor='galaxyEditor' v-show='currentMenu==="json"'/>
     <div id="pixi-app" ref='pixiApp'/>
-    <json-tool :galaxyEditor='galaxyEditor'/>
   </div>
 </template>
 
@@ -13,6 +14,7 @@
 
 import GalaxyEditor from '../editor'
 
+import MenuVue from './Menu.vue'
 import SnapperToolVue from './SnapperTool.vue'
 import StarToolVue from './StarTool.vue'
 import BrushToolVue from './BrushTool.vue'
@@ -21,6 +23,7 @@ import RandomizerToolVue from './RandomizerTool.vue'
 
 export default {
   components: {
+    'tool-menu': MenuVue,
     'star-tool': StarToolVue,
     'json-tool': JSONToolVue,
     'brush-tool': BrushToolVue,
@@ -29,7 +32,8 @@ export default {
   },
   data () {
     return {
-      galaxyEditor: GalaxyEditor
+      galaxyEditor: GalaxyEditor,
+      currentMenu: null
     }
   },
 
@@ -44,6 +48,7 @@ export default {
 
   mounted () {
     this.$refs.pixiApp.appendChild(this.galaxyEditor.app.view) // Add the pixi canvas to the element.
+    this.galaxyEditor.on('onStarSelected', this.onStarSelected.bind(this))
   },
 
   unmounted () {
@@ -56,9 +61,20 @@ export default {
   },
 
   methods: {
+    onMenuChanged(menu) {
+      this.galaxyEditor.onMenuChanged()
+      if(this.currentMenu === menu) {
+        this.currentMenu = null
+        return
+      }
+      this.currentMenu = menu
+    },
+    onStarSelected() {
+      this.currentMenu = 'star'
+    },
     //TODO
     handleResize (e) {
-			if(e){console.log()}
+      if(e){console.log()}
       this.galaxyEditor.onResized()
     }
   }
@@ -67,11 +83,16 @@ export default {
 
 <style scoped>
 #pixi-app {
+  position: absolute;
   z-index: -1;
   left: 0;
   top: 0;
   margin: 0;
+  padding: 0;
   height: 100%;
   overflow: hidden;
+}
+#galaxyEditorContainer {
+  color: white;
 }
 </style>

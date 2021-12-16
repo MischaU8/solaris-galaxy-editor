@@ -44,8 +44,8 @@ class GalaxyEditor extends EventEmitter {
     //let antialiasing = userSettings.map.antiAliasing === 'enabled';
 
     this.app = new PIXI.Application({
-      width: window.innerWidth/2.0, // window.innerWidth,
-      height: window.innerHeight/2.0, // window.innerHeight,
+      width: window.innerWidth,
+      height: window.innerHeight,
       backgroundColor: 0x000000, // black hexadecimal
       resolution: window.devicePixelRatio || 1,
       antialias: 'enabled',
@@ -133,6 +133,7 @@ class GalaxyEditor extends EventEmitter {
     if(clickEvent) { clickEvent = null }
     if( this.hoveredStar ) {
       this.selectedStar = this.hoveredStar
+      this.emit( 'onStarSelected' )
     }
     else {
       this.selectedStar = null
@@ -206,6 +207,10 @@ class GalaxyEditor extends EventEmitter {
     catch(e) {
       console.error(e)
     }
+  }
+
+  onMenuChanged() {
+    this.selectedStar = null
   }
 
   onStarMouseOver(star) {

@@ -1,5 +1,5 @@
 <template>
-  <div id="brush-tool" class='container'>
+  <div id="randomizer-tools" class='container'>
     <div class='row'>
       <div class='col'>
         <div class='row'>
@@ -100,4 +100,7 @@ export default {
 </script>
 
 <style>
+  #randomizer-tools {
+    position: absolute;
+  }
 </style>

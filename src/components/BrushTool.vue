@@ -30,4 +30,7 @@ export default {
 </script>
 
 <style>
+  #brush-tool {
+    position: absolute;
+  }
 </style>
