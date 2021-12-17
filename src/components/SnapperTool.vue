@@ -1,16 +1,20 @@
 <template>
-  <div id="snapper-tool" class='container'>
-    <div class='row'>
-      <div class='col'>
-        <div class='row'>
-        <label class='col'>Snap Step Distance</label>
-        <input class='col form-control' type="number" v-model.number='snapStepDistance'/>
+  <div id="snapper-tool" class=''>
+    <div class='container'>
+      <div class='row'>
+        <div class='col'>
+          <label class='col-form-label'>Snap Step Distance</label>
+        </div>
+        <div class='col-6'>
+          <input class='form-control' type="number" v-model.number='snapStepDistance'/>
         </div>
       </div>
-      <div class='col'>
-        <div class='row'>
-        <label class='col'>Snap Step Angle</label>
-        <input type="number" class='col form-control' v-model.number='snapStepAngle'/>
+      <div class='row'>
+        <div class='col'>
+          <label class='col-form-label'>Snap Step Angle</label>
+        </div>
+        <div class='col-6'>
+          <input type="number" class='form-control' v-model.number='snapStepAngle'/>
         </div>
       </div>
     </div>
@@ -97,5 +101,6 @@
 <style>
   #snapper-tool {
     position: absolute;
+    width: 25%;
   }
 </style>

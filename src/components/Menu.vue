@@ -1,16 +1,10 @@
 <template>
-  <div id="tool-menus" class='container'>
-    <div class='row'>
-      <button @click="$emit('change-menu','brush')" class='col mx-3 btn btn-warning btn-lg'>Brush</button>
-    </div>
-    <div class='row'>
-      <button @click="$emit('change-menu','snapper')" class='col mx-3 btn btn-warning btn-lg'>Snap</button>
-    </div>
-    <div class='row'>
-      <button @click="$emit('change-menu','randomizer')" class='col mx-3 btn btn-warning btn-lg'>Randomizers</button>
-    </div>
-    <div class='row'>
-      <button @click="$emit('change-menu','json')" class='col mx-3 btn btn-warning btn-lg'>JSON</button>
+  <div id="tool-menus" class=''>
+    <div class='btn-group-vertical'>
+      <button @click="$emit('change-menu','brush')" class='btn btn-primary'>Brush</button>
+      <button @click="$emit('change-menu','snapper')" class='btn btn-primary'>Snap</button>
+      <button @click="$emit('change-menu','randomizer')" class='btn btn-primary'>Randomizers</button>
+      <button @click="$emit('change-menu','json')" class='btn btn-primary'>JSON</button>
     </div>
   </div>
 </template>

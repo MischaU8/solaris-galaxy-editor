@@ -1,44 +1,107 @@
 <template>
-  <div id="randomizer-tools" class='container'>
-    <div class='row'>
-      <div class='col'>
-        <div class='row'>
-        <label class='col'>Position Range</label>
-        <input class='col form-control' type="number" v-model.number='positionRange.min'/>
-        <input class='col form-control' type="number" v-model.number='positionRange.max'/>
-        <button @click="randomizePositions" class='col mx-3 btn btn-success btn-lg mb-3 '><i class="fa fa-chevron-down"></i> Randomize Positions</button>
+  <div id="randomizer-tools" class=''>
+    <div class='container'>
+      <div class='row'>
+        <div class='col-6'>
+          <label class='col-form-label'>Position Range</label>
         </div>
       </div>
-      <div class='col'>
-        <div class='row'>
-          <label class='col'>Resources Range</label>
+      <div class='row'>
+        <div class='col-3'>
+          <input class='form-control' type="number" v-model.number='positionRange.min'/>
         </div>
-        <div class='row'>
-          <label class='col'>Split Resources</label>
+        <div class='col-3'>
+          <input class='form-control' type="number" v-model.number='positionRange.max'/>
+        </div>
+        <div class='col-6'>
+          <button @click="randomizePositions" class='btn btn-primary col-12'><i class="fa fa-chevron-down"></i> Randomize Positions</button>
+        </div>
+      </div>
+
+      <br/>
+      <br/>
+
+      <div class='row'>
+        <div class='col-6'>
+          <label class='col-form-label'>Split Resources</label>
+        </div>
+        <div class='col-6'>
           <input class='form-check-input' type='checkbox' v-model='splitResources'/>
-          <button @click="randomizeResources" class='col mx-3 btn btn-success btn-lg mb-3 '><i class="fa fa-chevron-down"></i> Randomize Resources</button>
+        </div>
+      </div>
+
+      <div class='container g-0' v-show='!splitResources'>
+        <div class='row'>
+          <div class='col-6'>
+            <label class='col-form-label'>Resources Range</label>
+          </div>
         </div>
         <div class='row'>
-          <div class='col'>
-            <label class='col'>Economy</label>
-            <input class='col form-control' type="number" v-model.number='resourcesRange.economy.min'/>
-            <input class='col form-control' type="number" v-model.number='resourcesRange.economy.max'/>
-            <button @click="randomizeResourceEconomy" class='col mx-3 btn btn-success btn-lg mb-3 '><i class="fa fa-chevron-down"></i> Randomize</button>
+          <div class='col-3'>
+            <input class='form-control' type="number" v-model.number='resourcesAllRange.min'/>
           </div>
-          <div class='col'>
-            <label class='col'>Industrye</label>
-            <input class='col form-control' type="number" v-model.number='resourcesRange.industry.min'/>
-            <input class='col form-control' type="number" v-model.number='resourcesRange.industry.max'/>
-            <button @click="randomizeResourceIndustry" class='col mx-3 btn btn-success btn-lg mb-3 '><i class="fa fa-chevron-down"></i> Randomize</button>
+          <div class='col-3'>
+            <input class='form-control' type="number" v-model.number='resourcesAllRange.max'/>
           </div>
-          <div class='col'>
-            <label class='col'>Science</label>
-            <input class='col form-control' type="number" v-model.number='resourcesRange.science.min'/>
-            <input class='col form-control' type="number" v-model.number='resourcesRange.science.max'/>
-            <button @click="randomizeResourceScience" class='col mx-3 btn btn-success btn-lg mb-3 '><i class="fa fa-chevron-down"></i> Randomize</button>
+          <div class='col-6'>
+            <button @click="randomizeResources" class='btn btn-primary col-12'><i class="fa fa-chevron-down"></i>Randomize Resources</button>
           </div>
         </div>
       </div>
+
+      <div class='container g-0' v-show='splitResources'>
+        <div class='row'>
+          <div class='col-6'>
+            <label class='col-form-label'>Economy Range</label>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-3'>
+            <input class='form-control' type="number" v-model.number='resourcesRange.economy.min'/>
+          </div>
+          <div class='col-3'>
+            <input class='form-control' type="number" v-model.number='resourcesRange.economy.max'/>
+          </div>
+          <div class='col-6'>
+            <button @click="randomizeResourceEconomy" class='btn btn-primary col-12'><i class="fa fa-chevron-down"></i>Randomize Economy</button>
+          </div>
+        </div>
+
+        <div class='row'>
+          <div class='col-6'>
+            <label class='col-form-label'>Industry Range</label>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-3'>
+            <input class='form-control' type="number" v-model.number='resourcesRange.industry.min'/>
+          </div>
+          <div class='col-3'>
+            <input class='form-control' type="number" v-model.number='resourcesRange.industry.max'/>
+          </div>
+          <div class='col-6'>
+            <button @click="randomizeResourceIndustry" class='btn btn-primary col-12'><i class="fa fa-chevron-down"></i>Randomize Industry</button>
+          </div>
+        </div>
+
+        <div class='row'>
+          <div class='col-6'>
+            <label class='col-form-label'>Science Range</label>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-3'>
+            <input class='form-control' type="number" v-model.number='resourcesRange.science.min'/>
+          </div>
+          <div class='col-3'>
+            <input class='form-control' type="number" v-model.number='resourcesRange.science.max'/>
+          </div>
+          <div class='col-6'>
+            <button @click="randomizeResourceScience" class='btn btn-primary col-12'><i class="fa fa-chevron-down"></i>Randomize Science</button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </template>
@@ -51,6 +114,7 @@ export default {
     return {
       galaxyEditor: GalaxyEditor,
       positionRange: { min: 0.0, max: 0.125 },
+      resourcesAllRange: { min: 0, max: 100 },
       resourcesRange: {
         economy: { min: 0, max: 100 },
         industry: { min: 0, max: 100 },
@@ -69,6 +133,17 @@ export default {
         star.location.x += xOffset+(Math.sign(xOffset)*this.positionRange.min*50.0)
         star.location.y += yOffset+(Math.sign(yOffset)*this.positionRange.min*50.0)
         star.updatePosition()
+      }
+    },
+    randomizeResources() {
+      let stars = this.galaxyEditor.stars
+      for(let star of stars) {
+        let resourceRange = this.resourcesAllRange.max-this.resourcesAllRange.min
+        let resourceValue = Math.floor(this.resourcesRange.economy.min+resourceRange*Math.random())
+        star.naturalResources.economy = resourceValue
+        star.naturalResources.industry = resourceValue
+        star.naturalResources.science = resourceValue
+        star._updateNaturalResourcesText()
       }
     },
     randomizeResourceEconomy() {
@@ -102,5 +177,6 @@ export default {
 <style>
   #randomizer-tools {
     position: absolute;
+    width: 25%;
   }
 </style>
