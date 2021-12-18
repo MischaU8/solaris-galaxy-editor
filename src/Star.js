@@ -20,8 +20,8 @@ class Star extends EventEmitter {
     }
     this.warpGate = false
     this.homeStar = false
-    this.playerId = null
-    this.specialistId = null
+    this.playerId = -1
+    this.specialistId = -1
     this.isNebula = false
     this.isAsteroidField = false
 
@@ -74,7 +74,7 @@ class Star extends EventEmitter {
   }
 
   _updatePlayer(colours, shapes) {
-    if(!this.playerId) {return}
+    if(this.playerId === null) {return}
     if(this.playerId === -1) { return }
     this.player.colour = colours[this.playerId%8]
     this.player.shape = shapes[Math.floor(this.playerId/8)]
@@ -215,10 +215,10 @@ class Star extends EventEmitter {
   }
 
   _updateStarSprite() {
-    if( this.specialistId ) { return }
     if( this.star_sprite ) {
       this.container.removeChild(this.star_sprite)
     }
+    if( this.specialistId >= 0 ) { return }
     this.star_sprite = new PIXI.Sprite(TextureService.STAR_SYMBOLS['scannable'])
     this.star_sprite.anchor.set(0.5)
     this.star_sprite.width = 12.0
