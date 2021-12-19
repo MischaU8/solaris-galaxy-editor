@@ -1,10 +1,12 @@
 import * as PIXI from 'pixi.js-legacy'
 import EventEmitter from 'events'
 import TextureService from './texture'
+//import galaxyEditor from './editor'
 
 class Star extends EventEmitter {
 
   static currentId = 0
+  static textAttribs = {fontName: 'Arial'}
 
   constructor (app, location, fullStar, coloursValues, shapes) {
     super()
@@ -54,8 +56,8 @@ class Star extends EventEmitter {
     this.container.position.y = location.y
     this.container.interactive = true
     //this.container.interactiveChildren = false
-    this.container.buttonMode = true
-    this.container.hitArea = new PIXI.Circle(0, 0, 32)
+    //this.container.buttonMode = true
+    //this.container.hitArea = new PIXI.Circle(0, 0, 32)
     this.baseScale = 1.0/4.0
 
     this.container.on('pointerup', this.onClicked.bind(this))
@@ -227,14 +229,15 @@ class Star extends EventEmitter {
   }
 
   _updateNaturalResourcesText() {
-    //TODO use bitmap text, change text without creating another object
     if( this.naturalResources_text ) {
       this.container.removeChild(this.naturalResources_text)
     }
-    this.naturalResources_text = new PIXI.Text(`${this.naturalResources.economy} ${this.naturalResources.industry} ${this.naturalResources.science}`, {fontFamily: 'Arial', fontSize: 24, fill: 0xffffff, align: 'center'})
+    let textString = `${this.naturalResources.economy} ${this.naturalResources.industry} ${this.naturalResources.science}`
+    this.naturalResources_text = new PIXI.BitmapText(textString, Star.textAttribs)
     this.naturalResources_text.position.x = -(this.naturalResources_text.width/2.0)
     this.naturalResources_text.position.y = 16
     this.container.addChild(this.naturalResources_text)
+    //galaxyEditor.viewport.addChild(this.naturalResources_text)
   }
 
   _updateInfrastructureText() {
@@ -242,10 +245,12 @@ class Star extends EventEmitter {
     if( this.infrastructure_text ) {
       this.container.removeChild(this.infrastructure_text)
     }
-    this.infrastructure_text = new PIXI.Text(`${this.infrastructure.economy} ${this.infrastructure.industry} ${this.infrastructure.science}`, {fontFamily: 'Arial', fontSize: 24, fill: 0xffffff, align: 'center'})
+    let textString = `${this.infrastructure.economy} ${this.infrastructure.industry} ${this.infrastructure.science}` 
+    this.infrastructure_text = new PIXI.BitmapText(textString, Star.textAttribs)
     this.infrastructure_text.position.x = (-this.infrastructure_text.width/2.0)
     this.infrastructure_text.position.y = -16-(this.infrastructure_text.height)
     this.container.addChild(this.infrastructure_text)
+    //galaxyEditor.viewport.addChild(this.infrastructure_text)
   }
 
   onClicked (e) {
@@ -261,14 +266,14 @@ class Star extends EventEmitter {
   }
 
   onMouseOver (e) {
-		e = null
-		if (e) {console.log()}
+    e = null
+    if (e) {console.log()}
     this.emit('onStarMouseOver', this)
   }
 
   onMouseOut (e) {
-		e = null
-		if (e) {console.log()}
+    e = null
+    if (e) {console.log()}
     this.emit('onStarMouseOut', this)
   }
 

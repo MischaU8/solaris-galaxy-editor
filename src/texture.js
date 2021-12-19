@@ -14,8 +14,9 @@ class TextureService {
     initialize () { //TODO since both game and editor uses this. it should bot be initialized by both
       this._loadStarSymbols()
       this._loadStarModifiers()
+
       this.DEFAULT_FONT_STYLE = new PIXI.TextStyle({
-        fontFamily: `'Space Mono', monospace`,
+        fontFamily: `'Arial'`,
         fill: 0xFFFFFF,
         padding: 3
       })
@@ -28,7 +29,7 @@ class TextureService {
       })
 
       this.DEFAULT_FONT_BITMAP = PIXI.BitmapFont.from(
-        "space-mono",
+        "Arial",
         this.DEFAULT_FONT_STYLE,
         {
           chars: PIXI.BitmapFont.ASCII,
