@@ -93,6 +93,14 @@
           <input class='form-check-input' type='checkbox' v-model='galaxyEditor.selectedStar.isNebula'/>
         </div>
       </div>
+      <div class='row'>
+        <div class='col-6'>
+          <label class='col-form-label'>Black Hole</label>
+        </div>
+        <div class='col-6'>
+          <input class='form-check-input' type='checkbox' v-model='galaxyEditor.selectedStar.isBlackHole'/>
+        </div>
+      </div>
 
       <br/>
 

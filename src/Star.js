@@ -25,6 +25,7 @@ class Star extends EventEmitter {
     this.playerId = -1
     this.specialistId = -1
     this.isNebula = false
+    this.isBlackHole = false
     this.isAsteroidField = false
 
     let nr = Math.round(Math.random()*50)
@@ -47,6 +48,7 @@ class Star extends EventEmitter {
         this.infrastructure = fullStar.infrastructure
       }
       this.isNebula = fullStar.isNebula
+      this.isBlackHole = fullStar.isBlackHole
       this.isAsteroidField = fullStar.isAsteroidField
     }
 
@@ -55,9 +57,9 @@ class Star extends EventEmitter {
     this.container.position.x = location.x
     this.container.position.y = location.y
     this.container.interactive = true
-    //this.container.interactiveChildren = false
-    //this.container.buttonMode = true
-    //this.container.hitArea = new PIXI.Circle(0, 0, 32)
+    this.container.interactiveChildren = false
+    this.container.buttonMode = true
+    this.container.hitArea = new PIXI.Circle(0, 0, 32)
     this.baseScale = 1.0/4.0
 
     this.container.on('pointerup', this.onClicked.bind(this))
@@ -98,6 +100,7 @@ class Star extends EventEmitter {
     this._updateNaturalResourcesText()
     this._updateSpecialistSprite()
     this._updateNebulaSprite()
+    this._updateBlackHoleGeometry()
     this._updateAsteroidFieldSprite()
   }
 
@@ -183,8 +186,8 @@ class Star extends EventEmitter {
       let nebulaTexture = TextureService.STAR_MODIFIERS['nebula']
       this.nebulaSprite = new PIXI.Sprite(nebulaTexture)
       this.nebulaSprite.anchor.set(0.5)
-      this.nebulaSprite.width = 64
-      this.nebulaSprite.height = 64
+      this.nebulaSprite.width = 64*1.5
+      this.nebulaSprite.height = 64*1.5
       this.container.addChild(this.nebulaSprite)
     }
   }
@@ -199,7 +202,25 @@ class Star extends EventEmitter {
       let asteroidFieldTexture = TextureService.STAR_MODIFIERS['asteroids']
       this.asteroidFieldSprite = new PIXI.Sprite(asteroidFieldTexture)
       this.asteroidFieldSprite.anchor.set(0.5)
+      this.asteroidFieldSprite.scale.x = 1.5
+      this.asteroidFieldSprite.scale.y = 1.5
       this.container.addChild(this.asteroidFieldSprite)
+    }
+  }
+
+  _updateBlackHoleGeometry() {
+    if( this.blackHole_geometry ) {
+      this.container.removeChild(this.blackHole_geometry)
+    }
+    if( this.isBlackHole ) {
+      this.blackHole_geometry = new PIXI.Graphics()
+      this.blackHole_geometry.lineStyle(2, 0x000000, 1.0)
+      this.blackHole_geometry.beginFill()
+      this.blackHole_geometry.drawCircle(0, 0, 6)
+      this.blackHole_geometry.endFill()
+      this.blackHole_geometry.lineStyle(2, 0xffffff, 1.0)
+      this.blackHole_geometry.drawCircle(0, 0, 8)
+      this.container.addChild(this.blackHole_geometry)
     }
   }
 
@@ -220,7 +241,7 @@ class Star extends EventEmitter {
     if( this.star_sprite ) {
       this.container.removeChild(this.star_sprite)
     }
-    if( this.specialistId >= 0 ) { return }
+    if( (this.specialistId >= 0) || (this.isBlackHole) ) { return }
     this.star_sprite = new PIXI.Sprite(TextureService.STAR_SYMBOLS['scannable'])
     this.star_sprite.anchor.set(0.5)
     this.star_sprite.width = 12.0
@@ -290,6 +311,7 @@ class Star extends EventEmitter {
       warpGate: this.warpGate,
       homeStar: this.homeStar,
       isNebula: this.isNebula,
+      isBlackHole: this.isBlackHole,
       isAsteroidField: this.isAsteroidField,
       playerId: (this.playerId >= 0 ? this.playerId : null) ,
       specialistId: this.specialistId >= 0 ? this.specialistId : null
