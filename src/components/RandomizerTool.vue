@@ -185,7 +185,7 @@ export default {
       let stars = this.galaxyEditor.stars
       for(let star of stars) {
         let resourceRange = this.resourcesAllRange.max-this.resourcesAllRange.min
-        let resourceValue = Math.floor(this.resourcesRange.economy.min+resourceRange*Math.random())
+        let resourceValue = Math.floor(this.resourcesAllRange.min+this.resourcesRange.economy.min+resourceRange*Math.random())
         star.naturalResources.economy = resourceValue
         star.naturalResources.industry = resourceValue
         star.naturalResources.science = resourceValue
