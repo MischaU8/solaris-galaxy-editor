@@ -41,8 +41,8 @@ class Star extends EventEmitter {
       this.location = fullStar.location
       this.warpGate = fullStar.warpGate
       this.homeStar = fullStar.homeStar
-      this.playerId = fullStar.playerId
-      this.specialistId = fullStar.specialistId
+      this.playerId = fullStar.playerId ?? -1
+      this.specialistId = fullStar.specialistId ?? -1
       this.naturalResources = fullStar.naturalResources
       if( fullStar.infrastructure ) {
         this.infrastructure = fullStar.infrastructure
