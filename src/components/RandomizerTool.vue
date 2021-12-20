@@ -102,6 +102,49 @@
         </div>
       </div>
 
+      <br/>
+
+      <div class='row'>
+        <div class='col-6'>
+          <label class='col-form-label'>Nebula Range</label>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-6'>
+          <input class='form-range v-center-range' type="range" v-model.number='nebulaRange'/>
+        </div>
+        <div class='col-6'>
+          <button @click="randomizeNebulas" class='btn btn-primary col-12'><i class="fa fa-chevron-down"></i>Randomize Nebulas</button>
+        </div>
+      </div>
+
+      <div class='row'>
+        <div class='col-6'>
+          <label class='col-form-label'>Asteroid Field Range</label>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-6'>
+          <input class='form-range v-center-range' type="range" v-model.number='asteroidFieldRange'/>
+        </div>
+        <div class='col-6'>
+          <button @click="randomizeAsteroidFields" class='btn btn-primary col-12'><i class="fa fa-chevron-down"></i>Randomize Asteroids</button>
+        </div>
+      </div>
+
+      <div class='row'>
+        <div class='col-6'>
+          <label class='col-form-label'>Black Hole Range</label>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-6'>
+          <input class='form-range v-center-range' type="range" v-model.number='blackHoleRange'/>
+        </div>
+        <div class='col-6'>
+          <button @click="randomizeBlackHoles" class='btn btn-primary col-12'><i class="fa fa-chevron-down"></i>Randomize Black Holes</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -120,6 +163,9 @@ export default {
         industry: { min: 0, max: 100 },
         science: { min: 0, max: 100 }
       },
+      nebulaRange: 0,
+      asteroidFieldRange: 0,
+      blackHoleRange: 0,
       splitResources: false
     }
   },
@@ -169,6 +215,39 @@ export default {
         star.naturalResources.science = Math.floor(this.resourcesRange.science.min+resourceRange*Math.random())
         star._updateNaturalResourcesText()
       }
+    },
+    randomizeNebulas() {
+      let stars = this.galaxyEditor.stars
+      for(let star of stars) {
+        let threshold = Math.random()*100
+        star.isNebula = false
+        if( threshold < this.nebulaRange) {
+          star.isNebula = true
+        }
+        star._updateNebulaSprite()
+      }
+    },
+    randomizeAsteroidFields() {
+      let stars = this.galaxyEditor.stars
+      for(let star of stars) {
+        let threshold = Math.random()*100
+        star.isAsteroidField = false
+        if( threshold < this.asteroidFieldRange) {
+          star.isAsteroidField = true
+        }
+        star._updateAsteroidFieldSprite()
+      }
+    },
+    randomizeBlackHoles() {
+      let stars = this.galaxyEditor.stars
+      for(let star of stars) {
+        let threshold = Math.random()*100
+        star.isBlackHole = false
+        if( threshold < this.blackHoleRange) {
+          star.isBlackHole = true
+        }
+        star._updateBlackHoleGeometry()
+      }
     }
   }
 }
@@ -178,5 +257,8 @@ export default {
   #randomizer-tools {
     position: absolute;
     width: 25%;
+  }
+  .v-center-range {
+    margin-top: 8px;
   }
 </style>
