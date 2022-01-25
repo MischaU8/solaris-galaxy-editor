@@ -122,6 +122,7 @@ class GalaxyEditor extends EventEmitter {
     this.setupViewport()
     this.viewport.setZoom(2)
     this._drawScaleBar()
+    this._drawTotalStars()
 
     // add the viewport to the stage
     this.app.stage.addChild(this.viewport)
@@ -299,6 +300,7 @@ class GalaxyEditor extends EventEmitter {
     let viewportWidth = (this.viewport.right-this.viewport.left)
     let zoom = (this.viewport.screenWidth / viewportWidth)
     this._updateScaleBarScale(zoom)
+    this._updateStarCountString()
   }
 
   draw () {
@@ -330,6 +332,12 @@ class GalaxyEditor extends EventEmitter {
       //this.app.stage.addChild(this.zoomText)
   }
 
+  _drawTotalStars() {
+    this.totalStarsText = new PIXI.Text('' ,{fontFamily : 'Arial', fontSize: 14, fill : 0xffffff, align : 'center'})
+    this.totalStarsText.position.y = this.totalStarsText.height
+    this.app.stage.addChild(this.totalStarsText)
+  }
+
   _drawScaleBar() {
     this.scaleText = new PIXI.Text('1 light year: ',{fontFamily : 'Arial', fontSize: 14, fill : 0xffffff, align : 'center'})
     this.app.stage.addChild(this.scaleText)
@@ -340,6 +348,10 @@ class GalaxyEditor extends EventEmitter {
     this.scaleBar.position.x = this.scaleText.width
     this.scaleBar.position.y = this.scaleText.height/2.0 - this.scaleBar.height/2.0
     this.app.stage.addChild(this.scaleBar)
+  }
+
+  _updateStarCountString() {
+    this.totalStarsText.text = 'Amount of stars: ' + String(this.stars.length)
   }
 
   _updateScaleBarScale(zoom) {
