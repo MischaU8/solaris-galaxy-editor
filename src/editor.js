@@ -186,15 +186,24 @@ class GalaxyEditor extends EventEmitter {
   }
 
   _onViewportClicked(clickEvent) {
-    if(clickEvent) { clickEvent = null }
+    console.log(clickEvent)
+    let button = clickEvent.event.data.originalEvent.button
+    console.log(button)
     if( this.hoveredStar ) {
-      this.selectedStar = this.hoveredStar
-      this.emit( 'onStarSelected' )
+      if(button === 0) {
+        this.selectedStar = this.hoveredStar
+        this.emit( 'onStarSelected' )
+      }
+      if(button === 2) {
+        //TODO destroy this star
+      }
     }
     else {
       this.selectedStar = null
-      this.addStars(this.cursor)
-      this.emit( 'onNothingClicked', this.cursor )
+      if(button === 0) {
+        this.addStars(this.cursor)
+      }
+      this.emit( 'onNothingClicked', this.cursor, button )
     }
   }
 
