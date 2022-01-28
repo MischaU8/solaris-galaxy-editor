@@ -186,7 +186,6 @@ class GalaxyEditor extends EventEmitter {
   }
 
   _onViewportClicked(clickEvent) {
-    console.log(clickEvent)
     let button = clickEvent.event.data.originalEvent.button
     console.log(button)
     if( this.hoveredStar ) {
@@ -195,7 +194,7 @@ class GalaxyEditor extends EventEmitter {
         this.emit( 'onStarSelected' )
       }
       if(button === 2) {
-        //TODO destroy this star
+        this.destroyHovered()
       }
     }
     else {
@@ -303,6 +302,14 @@ class GalaxyEditor extends EventEmitter {
       this.viewport.removeChild( this.selectedStar.container )
       this.selectedStar = null
     }
+  }
+
+  destroyHovered() {
+    const index = this.stars.indexOf(this.hoveredStar)
+    if( index > -1 ) { this.stars.splice(index, 1) }
+
+    this.viewport.removeChild( this.hoveredStar.container )
+    this.hoveredStar = null
   }
 
   _onTick() {
