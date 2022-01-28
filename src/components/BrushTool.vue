@@ -31,6 +31,7 @@
 
 <script>
 import GalaxyEditor from '../editor'
+import * as PIXI from 'pixi.js-legacy'
 
 export default {
   data () {
@@ -38,6 +39,34 @@ export default {
       galaxyEditor: GalaxyEditor
     }
   },
+  methods: {
+    onPixiTick(delta)  {
+      if(delta) { delta = 1 }
+      if(this.galaxyEditor.brushOptions.brushRadius !== this.lastSize) {
+        this.updateBrushVisualizer()
+      }
+      this.lastSize = this.galaxyEditor.brushOptions.brushRadius
+      this.brushRadiusVisualizer.position = this.galaxyEditor.cursor
+    },
+    updateBrushVisualizer() {
+      this.brushRadiusVisualizer.clear()
+      this.brushRadiusVisualizer.lineStyle(2.0, 0xffffff, 1.0)
+      this.brushRadiusVisualizer.drawCircle(0,0,this.galaxyEditor.brushOptions.brushRadius*50)
+      this.galaxyEditor.viewport.addChild(this.brushRadiusVisualizer)
+    }
+  },
+  beforeMount() {
+    this.galaxyEditor = GalaxyEditor
+    document.addEventListener('keydown', this.onKeyDown)
+    document.addEventListener('keyup', this.onKeyUp)
+  },
+  mounted () {
+    this.brushRadiusVisualizer = new PIXI.Graphics()
+    this.lastSize = this.galaxyEditor.brushOptions.brushRadius
+    this.pixiApp = this.galaxyEditor.app
+    this.updateBrushVisualizer()
+    this.pixiApp.ticker.add( this.onPixiTick.bind(this) )
+  }
 }
 </script>
 
