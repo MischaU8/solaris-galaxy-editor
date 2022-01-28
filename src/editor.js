@@ -3,6 +3,7 @@ import { Viewport } from 'pixi-viewport'
 import Star from './Star'
 import TextureService from './texture'
 import EventEmitter from 'events'
+var vec2 = require('vec2')
 
 class GalaxyEditor extends EventEmitter {
 
@@ -192,6 +193,7 @@ class GalaxyEditor extends EventEmitter {
       if(button === 0) {
         this.selectedStar = this.hoveredStar
         this.emit( 'onStarSelected' )
+        //TODO implement this on the brush
       }
       if(button === 2) {
         this.destroyHovered()
@@ -201,6 +203,10 @@ class GalaxyEditor extends EventEmitter {
       this.selectedStar = null
       if(button === 0) {
         this.addStars(this.cursor)
+      }
+      if(button === 2) {
+        //TODO implement this on the brush
+        this.destroyStars(this.cursor)
       }
       this.emit( 'onNothingClicked', this.cursor, button )
     }
@@ -215,6 +221,7 @@ class GalaxyEditor extends EventEmitter {
   }
 
   addStars( location ) {
+    //TODO implement this on the brush
     let amount = this.brushOptions.starAmount
     let radius = this.brushOptions.brushRadius*50
     if(amount === 1) {
@@ -290,6 +297,21 @@ class GalaxyEditor extends EventEmitter {
     if( this.selectedStar ) {
       this.selectedStar.update(this.coloursValues, this.shapes)
     }
+  }
+
+  destroyStars(cursor) {
+    //TODO implement this on the brush
+    let radius = this.brushOptions.brushRadius*50
+    let starsUnderBrush = this.stars.filter( (star) => {
+      let starPosition = new vec2(star.location.x, star.location.y)
+      let cursorPosition = new vec2(cursor.x, cursor.y)
+      return starPosition.distance(cursorPosition) < radius
+    } )
+    starsUnderBrush.forEach( (star) => {
+      const index = this.stars.indexOf(star)
+      if( index > -1 ) { this.stars.splice(index, 1) }
+      this.viewport.removeChild( star.container )
+    } )
   }
 
   destroySelected() {
