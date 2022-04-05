@@ -126,6 +126,7 @@
 
 <script>
 import GalaxyEditor from '../editor'
+var vec2 = require('vec2')
 
 export default {
   data () {
@@ -141,38 +142,106 @@ export default {
   },
   methods: {
     rotateGalaxy() {
-      console.log('rotate clicked')
-      console.log(this.copyAndRotate)
+      let stars = this.galaxyEditor.stars
+      let pivot = new vec2(this.galaxyEditor.lastSelectedStar.location.x, this.galaxyEditor.lastSelectedStar.location.y)
+      if( this.copyAndRotate ) {
+        let iterations = 1
+        if( this.rotateRepeat ) { iterations = this.rotateFraction-1 }
+        let initialLength = stars.length //keep this outside of the while loop
+        while(iterations > 0) {
+          let angle = (2.0*Math.PI/this.rotateFraction) * iterations
+          //iterate using the array length,since the array will grow with new stars
+          for(let index = 0; index < initialLength; index+=1) {
+            let star = stars[index]
+            let starRelativePosition = new vec2(star.location.x-pivot.x, star.location.y-pivot.y)
+            let rotatedOnOrigin = starRelativePosition.rotate(angle, true, true)
+            let newLocation = { x: rotatedOnOrigin.x+pivot.x, y: rotatedOnOrigin.y+pivot.y }
+
+            this.galaxyEditor.copyStar(star, newLocation)
+          }
+          iterations -= 1
+        }
+      }
+      else {
+        for(let star of stars) {
+          let angle = (2.0*Math.PI/this.rotateFraction)
+          let starRelativePosition = new vec2(star.location.x-pivot.x, star.location.y-pivot.y)
+          let rotatedOnOrigin = starRelativePosition.rotate(angle, true, true)
+          star.location.x = pivot.x+rotatedOnOrigin.x
+          star.location.y = pivot.y+rotatedOnOrigin.y
+          star.updatePosition()
+        }
+      }
       console.log(this.rotateRepeat)
-      console.log(this.rotateFraction)
     },
     flipYGalaxy() {
-      console.log('flipY clicked')
-      console.log(this.copyAndFlipY)
+      let pivot = new vec2(this.galaxyEditor.lastSelectedStar.location.x, this.galaxyEditor.lastSelectedStar.location.y)
+      let stars = this.galaxyEditor.stars
+      if( this.copyAndFlipY ){
+        //iterate using the array length,since the array will grow with new stars
+        let initialLength = stars.length
+        for(let index = 0; index < initialLength; index+=1) {
+          let star = stars[index]
+          let delta = pivot.y-star.location.y
+          let newY = pivot.y+delta
+          let newLocation = { x: star.location.x, y: newY }
+          this.galaxyEditor.copyStar(star, newLocation)
+        }
+      }
+      else {
+        for(let star of stars) {
+          let delta = pivot.y-star.location.y
+          star.location.y = pivot.y+delta
+          star.updatePosition()
+        }
+      }
     },
     flipXGalaxy() {
-      console.log('flipX clicked')
-      console.log(this.copyAndFlipX)
+      let pivot = new vec2(this.galaxyEditor.lastSelectedStar.location.x, this.galaxyEditor.lastSelectedStar.location.y)
+      let stars = this.galaxyEditor.stars
+      if( this.copyAndFlipX ){
+        //iterate using the array length,since the array will grow with new stars
+        let initialLength = stars.length
+        for(let index = 0; index < initialLength; index+=1) {
+          let star = stars[index]
+          let delta = pivot.x-star.location.x
+          let newX = pivot.x+delta
+          let newLocation = { x: newX, y: star.location.y }
+          this.galaxyEditor.copyStar(star, newLocation)
+        }
+      }
+      else {
+        for(let star of stars) {
+          let delta = pivot.x-star.location.x
+          star.location.x = pivot.x+delta
+          star.updatePosition()
+        }
+      }
     },
     scaleGalaxy() {
-      console.log('scale clicked')
-      console.log(this.scaleMultiplier)
-    },
-    centralizeGalaxy() {
-      console.log('centralize clicked')
-    },
-    moveToOrigin() {
-      console.log('move origin clicked')
-    },
-    randomizeResources() {
       let stars = this.galaxyEditor.stars
       for(let star of stars) {
-        let resourceRange = this.resourcesAllRange.max-this.resourcesAllRange.min
-        let resourceValue = Math.floor(this.resourcesAllRange.min+this.resourcesRange.economy.min+resourceRange*Math.random())
-        star.naturalResources.economy = resourceValue
-        star.naturalResources.industry = resourceValue
-        star.naturalResources.science = resourceValue
-        star._updateNaturalResourcesText()
+        star.location.x *= this.scaleMultiplier
+        star.location.y *= this.scaleMultiplier
+        star.updatePosition()
+      }
+    },
+    centralizeGalaxy() {
+      let stars = this.galaxyEditor.stars
+      let center = this.galaxyEditor.getGalaxyCenter()
+      for(let star of stars) {
+        star.location.x -= center.x
+        star.location.y -= center.y
+        star.updatePosition()
+      }
+    },
+    moveToOrigin() {
+      let delta = new vec2(this.galaxyEditor.lastSelectedStar.location.x, this.galaxyEditor.lastSelectedStar.location.y)
+      let stars = this.galaxyEditor.stars
+      for(let star of stars) {
+        star.location.x -= delta.x
+        star.location.y -= delta.y
+        star.updatePosition()
       }
     },
   }

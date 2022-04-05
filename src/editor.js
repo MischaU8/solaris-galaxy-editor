@@ -192,6 +192,7 @@ class GalaxyEditor extends EventEmitter {
     if( this.hoveredStar ) {
       if(button === 0) {
         this.selectedStar = this.hoveredStar
+        this.lastSelectedStar = this.selectedStar
         this.emit( 'onStarSelected' )
         //TODO implement this on the brush
       }
@@ -212,12 +213,35 @@ class GalaxyEditor extends EventEmitter {
     }
   }
 
+  copyStar( star, newLocation ) {
+    let newStar = this.addStar( newLocation, null )
+    newStar.warpGate = star.warpGate
+    newStar.homeStar = star.homeStar
+    newStar.playerId = star.playerId ?? -1
+    newStar.specialistId = star.specialistId ?? -1
+
+    newStar.infrastructure.economy = star.infrastructure.economy
+    newStar.infrastructure.industry = star.infrastructure.industry
+    newStar.infrastructure.science = star.infrastructure.science
+
+    newStar.naturalResources.economy = star.naturalResources.economy
+    newStar.naturalResources.industry = star.naturalResources.industry
+    newStar.naturalResources.science = star.naturalResources.science
+
+    newStar.isNebula = star.isNebula
+    newStar.isBlackHole = star.isBlackHole
+    newStar.isAsteroidField = star.isAsteroidField
+    newStar._updateGraphics()
+
+  }
+
   addStar( location, fullStar ) {
     let star = new Star(this.app, location, fullStar, this.coloursValues, this.shapes)
     star.on('onStarMouseOver', this.onStarMouseOver.bind(this))
     star.on('onStarMouseOut', this.onStarMouseOut.bind(this))
     this.stars.push(star)
     this.viewport.addChild(star.container)
+    return star
   }
 
   addStars( location ) {
@@ -332,6 +356,17 @@ class GalaxyEditor extends EventEmitter {
 
     this.viewport.removeChild( this.hoveredStar.container )
     this.hoveredStar = null
+  }
+
+  getGalaxyCenter() {
+    let totalX = 0
+    let totalY = 0
+    for( let star of this.stars ) {
+      totalX += star.location.x
+      totalY += star.location.y
+    }
+    let center = new vec2(totalX/this.stars.length, totalY/this.stars.length)
+    return center
   }
 
   _onTick() {
