@@ -153,11 +153,13 @@ export default {
           //iterate using the array length,since the array will grow with new stars
           for(let index = 0; index < initialLength; index+=1) {
             let star = stars[index]
-            let starRelativePosition = new vec2(star.location.x-pivot.x, star.location.y-pivot.y)
-            let rotatedOnOrigin = starRelativePosition.rotate(angle, true, true)
-            let newLocation = { x: rotatedOnOrigin.x+pivot.x, y: rotatedOnOrigin.y+pivot.y }
+            if( !(star == this.galaxyEditor.lastSelectedStar) ) {
+              let starRelativePosition = new vec2(star.location.x-pivot.x, star.location.y-pivot.y)
+              let rotatedOnOrigin = starRelativePosition.rotate(angle, true, true)
+              let newLocation = { x: rotatedOnOrigin.x+pivot.x, y: rotatedOnOrigin.y+pivot.y }
 
-            this.galaxyEditor.copyStar(star, newLocation)
+              this.galaxyEditor.copyStar(star, newLocation)
+            }
           }
           iterations -= 1
         }
@@ -182,10 +184,12 @@ export default {
         let initialLength = stars.length
         for(let index = 0; index < initialLength; index+=1) {
           let star = stars[index]
-          let delta = pivot.y-star.location.y
-          let newY = pivot.y+delta
-          let newLocation = { x: star.location.x, y: newY }
-          this.galaxyEditor.copyStar(star, newLocation)
+          if( !(star == this.galaxyEditor.lastSelectedStar) ) {
+            let delta = pivot.y-star.location.y
+            let newY = pivot.y+delta
+            let newLocation = { x: star.location.x, y: newY }
+            this.galaxyEditor.copyStar(star, newLocation)
+          }
         }
       }
       else {
@@ -204,10 +208,12 @@ export default {
         let initialLength = stars.length
         for(let index = 0; index < initialLength; index+=1) {
           let star = stars[index]
-          let delta = pivot.x-star.location.x
-          let newX = pivot.x+delta
-          let newLocation = { x: newX, y: star.location.y }
-          this.galaxyEditor.copyStar(star, newLocation)
+          if( !(star == this.galaxyEditor.lastSelectedStar) ) {
+            let delta = pivot.x-star.location.x
+            let newX = pivot.x+delta
+            let newLocation = { x: newX, y: star.location.y }
+            this.galaxyEditor.copyStar(star, newLocation)
+          }
         }
       }
       else {
