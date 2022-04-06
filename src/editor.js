@@ -16,8 +16,10 @@ class GalaxyEditor extends EventEmitter {
     this.cursor = { x: 0, y: 0 }
     this.stars = new Array()
     this.selectedStar = null
+    this.lastSelectedStar = null
     //this.vueContainer = null
 
+    //TODO move this into brush component
     this.brushOptions = {
       brushRadius: 2,
       starAmount: 3
@@ -122,6 +124,7 @@ class GalaxyEditor extends EventEmitter {
     })
     this.setupViewport()
     this.viewport.setZoom(2)
+    this._drawPivotStarVisualizer()
     this._drawScaleBar()
     this._drawTotalStars()
 
@@ -193,6 +196,7 @@ class GalaxyEditor extends EventEmitter {
       if(button === 0) {
         this.selectedStar = this.hoveredStar
         this.lastSelectedStar = this.selectedStar
+        this._updatePivotStarVisualizer()
         this.emit( 'onStarSelected' )
         //TODO implement this on the brush
       }
@@ -423,12 +427,27 @@ class GalaxyEditor extends EventEmitter {
     this.app.stage.addChild(this.scaleBar)
   }
 
+  _drawPivotStarVisualizer() {
+    this.pivotStarVisualizer = new PIXI.Graphics()
+    this.pivotStarVisualizer.beginFill(0xffffff, 1.0)
+    this.pivotStarVisualizer.drawRect(-32, -1, 24, 2)
+    this.pivotStarVisualizer.drawRect(8, -1, 24, 2)
+    this.pivotStarVisualizer.drawRect(-1, -32-8, 2, 24)
+    this.pivotStarVisualizer.drawRect(-1, 8+8, 2, 24)
+    this.viewport.addChild( this.pivotStarVisualizer )
+  }
+
   _updateStarCountString() {
     this.totalStarsText.text = 'Amount of stars: ' + String(this.stars.length)
   }
 
   _updateScaleBarScale(zoom) {
     this.scaleBar.scale.x = zoom
+  }
+
+  _updatePivotStarVisualizer() {
+    this.pivotStarVisualizer.position.x = this.lastSelectedStar.location.x
+    this.pivotStarVisualizer.position.y = this.lastSelectedStar.location.y
   }
 }
 
