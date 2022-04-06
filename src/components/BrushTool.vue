@@ -22,7 +22,8 @@
 
       <div class='row'>
         <div class='col'>
-          <p>Click to place stars. If <i class='text-info'>Star Amount</i> is 1, the star will be placed precisely at the cursor position, otherwise, multiple stars will be placed within <i class='text-info'>Brush Radius</i></p>
+          <p><i class='text-success'>Left Click</i> to place stars and <i class='text-success'>Right Click</i> to delete them. If <i class='text-info'>Star Amount</i> is 1, the star will be placed precisely at the cursor position, otherwise, multiple stars will be placed within <i class='text-info'>Brush Radius</i></p>
+          <p><i class='text-success'>Right Clicking</i> a star will only delete the star under the cursor.</p> 
         </div>
       </div>
     </div>

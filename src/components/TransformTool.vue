@@ -119,6 +119,14 @@
 
       <br/>
       <br/>
+      <div class='row'>
+        <div class='col'>
+          <p>The <i>pivot</i> for rotations/flips and the <i>anchor</i> for moving is the last clicked star. This star will not be duplicated, even when <i>Copy and rotatate/flip</i> are selected.</p>
+          <p>It is advised to backup the galaxy using the JSON tool and saving it to a plain text file before applying these operations.</p>
+          <p>The <i>repeat</i> option for rotation will repeat and copy the result until a full circle is filled</p>
+          <p>It is good practice to center the galaxy on the origin after the galaxy is finished.</p>
+        </div>
+      </div>
 
     </div>
   </div>
@@ -257,8 +265,8 @@ export default {
 <style>
   #transform-tools {
     position: absolute;
-    left: 256px;
     width: 25%;
+    height: 80%; overflow-y: scroll;
   }
   .v-center-range {
     margin-top: 8px;

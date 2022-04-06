@@ -22,7 +22,7 @@
 
       <div class='row'>
         <div class='col'>
-          <p>Hold <i class='text-success'>Control</i> to snap the curser at precise angles and distances. Hold <i class='text-success'>Shift</i> to snap the cursor to precise distances.</p>
+          <p>Hold <i class='text-success'>Control</i> to snap the cursor at precise angles and distances. Hold <i class='text-success'>Shift</i> to snap the cursor to precise distances.</p>
           <p><i class='text-info'>Snap Step Angle</i> controls how many steps a circle is divided. <i class='text-info'>Snap Step Distance</i> controls the snap distance from the pivot.</p>
           <p>The <i>pivot</i> for snaping is the last star you placed, or the last star you clicked.</p>
         </div>
