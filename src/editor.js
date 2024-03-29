@@ -369,8 +369,10 @@ class GalaxyEditor extends EventEmitter {
 
   destroyWormHolesToStar(starId) {
     for( let origin of this.stars ) {
-      if (origin.wormHoleToStarId === starId)
+      if (origin.wormHoleToStarId === starId) {
         origin.wormHoleToStarId = -1
+        origin._updateGraphics()
+      }
     }
   }
 
