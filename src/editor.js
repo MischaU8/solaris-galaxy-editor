@@ -358,6 +358,24 @@ class GalaxyEditor extends EventEmitter {
     }
   }
 
+  updateWormHoleToStarId(targetId) {
+    const beforeId = this.selectedStar.wormHoleToStarId
+    if (beforeId !== -1) {
+      // remove old inbound wormholes if any
+      this.destroyWormHolesToStar(this.selectedStar.id)
+    }
+    if (targetId !== -1) {
+      const otherStar = this.stars.find(s => s.id === targetId)
+      // remove old inbound wormholes to target star if any
+      this.destroyWormHolesToStar(targetId)
+      // create wormhole pair
+      otherStar.wormHoleToStarId = this.selectedStar.id
+      otherStar._updateGraphics()
+    }
+    this.selectedStar.wormHoleToStarId = targetId
+    this.selectedStar._updateGraphics()
+  }
+
   destroyHovered() {
     const index = this.stars.indexOf(this.hoveredStar)
     if( index > -1 ) { this.stars.splice(index, 1) }

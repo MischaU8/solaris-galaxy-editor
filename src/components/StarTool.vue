@@ -139,9 +139,9 @@
           <label class='col-form-label'>Worm Hole to Star</label>
         </div>
         <div class='col-6'>
-          <select class='form-select' v-model.number='galaxyEditor.selectedStar.wormHoleToStarId'>
+          <select class='form-select' v-model.number='galaxyEditor.selectedStar.wormHoleToStarId' v-on:input='updateWormHoleToStarId'>
             <option value='-1'>None</option>
-            <option v-for='(star,index) in stars' v-bind:value='star.id' :key='index' :disabled='star.id === galaxyEditor.selectedStar.id'>Star #{{star.id}}</option>
+            <option v-for='(star,index) in stars' v-bind:value='star.id' :key='index' :disabled='star.id === galaxyEditor.selectedStar.id || star.wormHoleToStarId !== -1'>Star #{{star.id}}</option>
           </select>
         </div>
       </div>
@@ -178,6 +178,10 @@
       updateSpecialistID(id) {
         this.galaxyEditor.selectedStar.specialistId = id
       },
+      updateWormHoleToStarId(e) {
+        const targetId = parseFloat(e.target.value)
+        this.galaxyEditor.updateWormHoleToStarId(targetId)
+      }
     },
     computed: {
       specialists() {
